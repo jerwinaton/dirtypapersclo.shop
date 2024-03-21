@@ -1,7 +1,13 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Livewire\CheckoutPage;
+use App\Http\Livewire\CheckoutSuccessPage;
+use App\Http\Livewire\CollectionPage;
 use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Home;
+use App\Http\Livewire\ProductPage;
+use App\Http\Livewire\SearchPage;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', Home::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,4 +32,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+//storefront
+Route::get('/collections/{slug}', CollectionPage::class)->name('collection.view');
+
+Route::get('/products/{slug}', ProductPage::class)->name('product.view');
+
+Route::get('search', SearchPage::class)->name('search.view');
+
+Route::middleware('auth')->group(function () {
+
+    Route::get('checkout', CheckoutPage::class)->name('checkout.view');
+
+    Route::get('checkout/success', CheckoutSuccessPage::class)->name('checkout-success.view');
+});
+
+require __DIR__ . '/auth.php';
