@@ -4,11 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Demo Storefront</title>
-    <meta name="description" content="Example of an ecommerce storefront built with Lunar.">
+    <title>{{ config('app.name', 'Laravel') }} | Checkout</title>
+    <meta name="description" content="Checkout.">
 
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" href="{{ asset('favicon.svg') }}">
     @livewireStyles
