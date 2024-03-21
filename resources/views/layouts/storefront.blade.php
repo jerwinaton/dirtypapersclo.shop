@@ -9,11 +9,11 @@
 
     <meta name="description" content="Example of an ecommerce storefront built with Lunar.">
 
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" href="{{ asset('favicon.svg') }}">
     @livewireStyles
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="antialiased text-gray-900">
