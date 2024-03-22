@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Components;
 
 use Livewire\Component;
 use Lunar\Facades\CartSession;
+use NumberFormatter;
 
 class Cart extends Component
 {
@@ -86,9 +87,23 @@ class Cart extends Component
      *
      * @return void
      */
+
+    public function formatToPeso($value)
+    {
+        // Create a NumberFormatter instance
+        $formatter = new NumberFormatter('en_PH', NumberFormatter::CURRENCY);
+
+        // Format the item total price
+        $item_total_price_formatted = $formatter->format($value, 2);
+
+        return $item_total_price_formatted;
+    }
+
     public function mapLines()
     {
+
         $this->lines = $this->cartLines->map(function ($line) {
+
             return [
                 'id' => $line->id,
                 'identifier' => $line->purchasable->getIdentifier(),
@@ -99,9 +114,11 @@ class Cart extends Component
                 'options' => $line->purchasable->getOptions()->implode(' / '),
                 'sub_total' => $line->subTotal->formatted(),
                 'unit_price' => $line->unitPrice->formatted(),
+                'item_total_price' => $this->formatToPeso($line->unitPrice->decimal() * $line->quantity),
             ];
         })->toArray();
     }
+
 
     public function handleAddToCart()
     {
