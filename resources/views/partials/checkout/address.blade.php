@@ -164,7 +164,7 @@
 
         @if ($step == $currentStep)
         <div class="mt-6 text-right">
-            <button class="px-5 py-3 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-500" type="submit" wire:key="submit_btn" wire:loading.attr="disabled" wire:target="saveAddress">
+            <button class="px-5 py-3 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/80" type="submit" wire:key="submit_btn" wire:loading.attr="disabled" wire:target="saveAddress">
                 <span wire:loading.remove wire:target="saveAddress">
                     Save Address
                 </span>
