@@ -46,7 +46,7 @@
 
                                     <!-- get total -->
                                     <p class="ml-2 text-xs">
-                                        | {{$line['item_total_price'] }}
+                                        | {{$line['sub_total'] }}
                                     </p>
 
                                     <button class="p-2 ml-auto text-gray-600 transition-colors rounded-lg hover:bg-gray-100 hover:text-gray-700" type="button" wire:click="removeLine('{{ $line['id'] }}')">

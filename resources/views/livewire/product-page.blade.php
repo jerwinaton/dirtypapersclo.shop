@@ -54,7 +54,7 @@
                                 <button class="px-6 py-4 font-medium border rounded-lg focus:outline-none focus:ring" type="button" wire:click="
                                                 $set('selectedOptionValues.{{ $option['option']->id }}', {{ $value->id }})
                                             " :class="{
-                                                    'bg-indigo-600 border-indigo-600 text-white hover:bg-indigo-700': selectedValues
+                                                    'bg-primary border-gray-600 text-white hover:bg-primary/80': selectedValues
                                                         .includes({{ $value->id }}),
                                                     'hover:bg-gray-100': !selectedValues.includes({{ $value->id }})
                                                 }">
