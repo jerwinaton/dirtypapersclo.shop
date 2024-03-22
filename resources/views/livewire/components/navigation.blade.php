@@ -24,11 +24,11 @@
 
                 <!-- Settings Dropdown -->
                 @auth
-                <div class="hidden sm:flex sm:items-center sm:ms-6">
+                <div class="flex sm:items-center sm:ms-6">
                     <x-dropdown align="right" width="48">
                         <x-slot name="trigger">
-                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-800 bg-white hover:text-gray-600 focus:outline-none transition ease-in-out duration-150">
-                                <div>{{ Auth::user()->name }}</div>
+                            <button class="inline-flex  items-center px-3 py-2  text-sm leading-4 font-medium rounded-md text-gray-800 bg-white border-2 border-primary hover:text-gray-600 focus:outline-none transition ease-in-out duration-150">
+                                <div class="truncate w-10 md:w-16">{{ Auth::user()->name }}</div>
 
                                 <div class="ms-1">
                                     <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -39,6 +39,9 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            <x-dropdown-link :href="route('orders')">
+                                {{ __('Orders') }}
+                            </x-dropdown-link>
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profile') }}
                             </x-dropdown-link>
@@ -56,7 +59,7 @@
                     </x-dropdown>
                 </div>
                 @else
-                <a href="{{ route('login') }}" class="font-sans text-sm font-medium hover:text-gray-600 text-gray-800 ">Log in</a>
+                <a href="{{ route('login') }}" class="font-sans text-sm font-medium hover:text-gray-600 text-gray-800 underline ">Log in</a>
                 @if (Route::has('register'))
                 <a href="{{ route('register') }}" class="ml-2 font-sans text-sm font-medium hover:text-gray-600 text-gray-800 ">Register</a>
                 @endif

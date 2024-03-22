@@ -20,11 +20,11 @@ use App\Http\Livewire\SearchPage;
 |
 */
 
-Route::get('/', Home::class);
+Route::get('/', Home::class)->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/orders', function () {
+    return view('orders');
+})->middleware(['auth', 'verified'])->name('orders');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
