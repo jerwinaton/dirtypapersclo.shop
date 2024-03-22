@@ -55,6 +55,12 @@ return [
             'mailers' => [],
             'notifications' => [],
         ],
+        'cancelled' => [
+            'label' => 'Cancelled',
+            'color' => '#E75F5F',
+            'mailers' => [],
+            'notifications' => [],
+        ],
 
     ],
 
