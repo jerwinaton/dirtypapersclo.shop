@@ -20,13 +20,15 @@ use App\Http\Livewire\SearchPage;
 |
 */
 
+
 Route::get('/', Home::class)->name('home');
+
 
 Route::get('/orders', function () {
     return view('orders');
 })->middleware(['auth', 'verified'])->name('orders');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -39,7 +41,7 @@ Route::get('/products/{slug}', ProductPage::class)->name('product.view');
 
 Route::get('search', SearchPage::class)->name('search.view');
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', 'verified')->group(function () {
 
     Route::get('checkout', CheckoutPage::class)->name('checkout.view');
 
