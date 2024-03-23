@@ -1,5 +1,5 @@
 <form {{ $attributes->merge(['class' => 'w-full relative']) }} action="{{ route('search.view') }}">
-    <input name="term" type="search" placeholder="Search for products" class="w-full pl-10 text-sm border border-primary  rounded-lg" value="{{ $this->term }}" />
+    <input name="term" type="search" placeholder="Search for products" class="w-full pl-10 text-sm bg-slate-100 border-0 rounded-lg" value="{{ $this->term }}" />
 
     <button class="absolute p-2 text-gray-600 transition -translate-y-1/2 rounded-md left-1 top-1/2 hover:bg-gray-50">
         <span class="sr-only">Submit Search</span>
