@@ -21,39 +21,53 @@ class CustomerSeeder extends AbstractSeeder
             $faker = Factory::create();
             $customers = Customer::factory(100)->create();
 
+            // B2C SETUP
             foreach ($customers as $customer) {
-                for ($i = 0; $i < $faker->numberBetween(1, 10); $i++) {
+                for ($i = 0; $i < count($customers); $i++) {
                     $user = User::factory()->create();
-
                     $customer->users()->attach($user);
+
+                    Address::factory()->create([
+                        'shipping_default' => true,
+                        'country_id' => 175, //ph
+                        'customer_id' => $customer->id,
+                    ]);
                 }
-
-                Address::factory()->create([
-                    'shipping_default' => true,
-                    'country_id' => 175,
-                    'customer_id' => $customer->id,
-                ]);
-
-                Address::factory()->create([
-                    'shipping_default' => false,
-                    'country_id' => 175,
-                    'customer_id' => $customer->id,
-                ]);
-
-                Address::factory()->create([
-                    'shipping_default' => false,
-                    'billing_default' => true,
-                    'country_id' => 175,
-                    'customer_id' => $customer->id,
-                ]);
-
-                Address::factory()->create([
-                    'shipping_default' => false,
-                    'billing_default' => false,
-                    'country_id' => 175,
-                    'customer_id' => $customer->id,
-                ]);
             }
+            // B2B SETUP
+            // foreach ($customers as $customer) {
+            //     for ($i = 0; $i < $faker->numberBetween(1, 10); $i++) {
+            //         $user = User::factory()->create();
+
+            //         $customer->users()->attach($user);
+            //     }
+
+            //     Address::factory()->create([
+            //         'shipping_default' => true,
+            //         'country_id' => 175,
+            //         'customer_id' => $customer->id,
+            //     ]);
+
+            //     Address::factory()->create([
+            //         'shipping_default' => false,
+            //         'country_id' => 175,
+            //         'customer_id' => $customer->id,
+            //     ]);
+
+            //     Address::factory()->create([
+            //         'shipping_default' => false,
+            //         'billing_default' => true,
+            //         'country_id' => 175,
+            //         'customer_id' => $customer->id,
+            //     ]);
+
+            //     Address::factory()->create([
+            //         'shipping_default' => false,
+            //         'billing_default' => false,
+            //         'country_id' => 175,
+            //         'customer_id' => $customer->id,
+            //     ]);
+            // }
         });
     }
 }

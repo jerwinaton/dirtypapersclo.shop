@@ -43,7 +43,7 @@
                         </x-slot>
 
                         <x-slot name="content">
-                            <p class="text-xs px-4 py-2">{{ Auth::user()->name }}</p>
+                            <p class="text-xs px-4 py-2 capitalize">{{ Auth::user()->first_name }}</p>
                             <hr class="mx-4" />
                             <x-dropdown-link :href="route('orders')">
                                 {{ __('Orders') }}
