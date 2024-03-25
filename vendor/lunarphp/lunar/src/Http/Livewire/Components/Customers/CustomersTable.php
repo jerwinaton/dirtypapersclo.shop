@@ -50,7 +50,7 @@ class CustomersTable extends Table
                 __('adminhub::tables.headings.name')
             ),
             TextColumn::make('orders', function ($record) {
-                return Order::where('user_id', $record->id)->count();
+                return Order::where('customer_id', $record->id)->count();
             })->heading(
                 __('adminhub::tables.headings.orders')
             ),
