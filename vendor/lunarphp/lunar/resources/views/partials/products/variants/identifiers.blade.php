@@ -11,7 +11,7 @@
         <x-hub::input.text wire:model="variant.sku" :error="$errors->first('variant.sku')" />
       </x-hub::input.group>
 
-      <div class="grid grid-cols-2 gap-4">
+      <!-- <div class="grid grid-cols-2 gap-4">
         <x-hub::input.group :label="__('adminhub::inputs.gtin.label')" :error="$errors->first('variant.gtin')" for="gtin">
           <x-hub::input.text id="gtin" wire:model="variant.gtin" :error="$errors->first('variant.gtin')" />
         </x-hub::input.group>
@@ -23,7 +23,7 @@
 
       <x-hub::input.group :label="__('adminhub::inputs.ean.label')" for="ean" :error="$errors->first('variant.ean')">
          <x-hub::input.text id="ean" wire:model="variant.ean" :error="$errors->first('variant.ean')"/>
-      </x-hub::input.group>
+      </x-hub::input.group> -->
     </div>
   </div>
 </div>

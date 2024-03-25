@@ -32,7 +32,7 @@ class CollectionPage extends Component
             ]
         );
 
-        if (! $this->url) {
+        if (!$this->url) {
             abort(404);
         }
     }

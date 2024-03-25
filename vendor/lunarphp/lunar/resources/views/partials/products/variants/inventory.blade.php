@@ -11,17 +11,17 @@
         <x-hub::input.group :label="__('adminhub::inputs.stock.label')" for="stock" :error="$errors->first('variant.stock')">
           <x-hub::input.text type="number" wire:model="variant.stock" id="stock" :error="$errors->first('variant.stock')" />
         </x-hub::input.group>
-
+        <!-- 
         <x-hub::input.group :label="__('adminhub::inputs.backorder.label')" for="backorder" :error="$errors->first('variant.backorder')">
           <x-hub::input.text type="number" wire:model="variant.backorder" id="backorder" :error="$errors->first('variant.backorder')" />
-        </x-hub::input.group>
+        </x-hub::input.group> -->
 
         <div>
           <x-hub::input.group :label="__('adminhub::inputs.purchasable.label')" for="purchasable" :error="$errors->first('variant.purchasable')">
             <x-hub::input.select wire:model="variant.purchasable" id="purchasable" :error="$errors->first('variant.purchasable')">
               <option value="always">{{ __('adminhub::partials.inventory.options.always') }}</option>
               <option value="in_stock">{{ __('adminhub::partials.inventory.options.in_stock') }}</option>
-              <option value="backorder">{{ __('adminhub::partials.inventory.options.backorder') }}</option>
+              <!-- <option value="backorder">{{ __('adminhub::partials.inventory.options.backorder') }}</option> -->
             </x-hub::input.select>
           </x-hub::input.group>
         </div>
