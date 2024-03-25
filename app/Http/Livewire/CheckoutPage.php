@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Livewire\ComponentConcerns\PerformsRedirects;
 use Lunar\Facades\CartSession;
@@ -10,6 +12,7 @@ use Lunar\Facades\ShippingManifest;
 use Lunar\Models\Cart;
 use Lunar\Models\CartAddress;
 use Lunar\Models\Country;
+use Lunar\Models\Customer;
 
 class CheckoutPage extends Component
 {
@@ -107,6 +110,30 @@ class CheckoutPage extends Component
             $this->redirect('/');
 
             return;
+        }
+
+        // Fetch the customer from your database based on your application's logic
+        //if you have a logged-in user, you can fetch the customer associated with that user
+
+        $userId = Auth::user()->id;
+
+        if (!$userId) {
+            $this->redirect('/');
+            return;
+        }
+        $prefix = config('lunar.database.table_prefix');
+        // Retrieve the corresponding customer(s) for the user from the pivot table
+        $customer_ids = DB::table("{$prefix}customer_user")
+            ->where('user_id', $userId)
+            ->pluck('customer_id');
+
+        // Retrieve the customer(s) based on the retrieved IDs
+        $customers = Customer::find($customer_ids);
+
+        // Associate the customer with the cart
+        if ($customers->isNotEmpty()) {
+            $customer = $customers; // Assuming a user can only be associated with one customer
+            $this->cart->setCustomer($customer->first());
         }
 
         if ($this->payment_intent) {
