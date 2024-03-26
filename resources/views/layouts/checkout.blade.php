@@ -9,6 +9,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="icon" href="{{ asset('favicon.svg') }}">
+    <script src="https://js.stripe.com/v3/"></script>
     @livewireStyles
     <!-- @stripeScripts -->
 </head>

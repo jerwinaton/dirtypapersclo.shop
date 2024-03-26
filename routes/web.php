@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CustomerOrdersController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ApiController;
 use App\Http\Livewire\CheckoutPage;
 use App\Http\Livewire\CheckoutSuccessPage;
 use App\Http\Livewire\CollectionPage;
@@ -47,5 +48,7 @@ Route::middleware('auth', 'verified')->group(function () {
 
     Route::get('checkout/success', CheckoutSuccessPage::class)->name('checkout-success.view');
 });
+
+
 
 require __DIR__ . '/auth.php';

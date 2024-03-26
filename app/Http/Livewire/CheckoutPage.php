@@ -38,6 +38,7 @@ class CheckoutPage extends Component
      */
     public int $currentStep = 1;
 
+
     /**
      * Whether the shipping address is the billing address too.
      */
