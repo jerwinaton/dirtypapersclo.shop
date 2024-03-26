@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CustomerOrdersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Livewire\CheckoutPage;
 use App\Http\Livewire\CheckoutSuccessPage;
@@ -24,10 +25,9 @@ use App\Http\Livewire\SearchPage;
 Route::get('/', Home::class)->name('home');
 
 
-Route::get('/orders', function () {
-    return view('orders');
-})->middleware(['auth', 'verified'])->name('orders');
-
+Route::middleware('auth', 'verified')->group(function () {
+    Route::get('orders', [CustomerOrdersController::class, 'index'])->name('orders');
+});
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
