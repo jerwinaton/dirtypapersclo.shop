@@ -444,7 +444,7 @@ class Cart extends BaseModel
     public function associate(User $user, string $policy = 'merge', bool $refresh = true): Cart
     {
         if ($this->customer()->exists()) {
-            if (! $user->query()
+            if (!$user->query()
                 ->whereHas('customers', fn ($query) => $query->where('customer_id', $this->customer->id))
                 ->exists()) {
                 throw new Exception('Invalid user');
@@ -463,7 +463,7 @@ class Cart extends BaseModel
     public function setCustomer(Customer $customer): Cart
     {
         if ($this->user()->exists()) {
-            if (! $customer->query()
+            if (!$customer->query()
                 ->whereHas('users', fn ($query) => $query->where('user_id', $this->user->id))
                 ->exists()) {
                 throw new Exception('Invalid customer');
@@ -561,13 +561,32 @@ class Cart extends BaseModel
             )->validate();
         }
 
-        return app(
+        $order = app(
             config('lunar.cart.actions.order_create', CreateOrder::class)
         )->execute(
             $this->refresh()->calculate(),
             $allowMultipleOrders,
             $orderIdToUpdate
         )->then(fn ($order) => $order->refresh());
+
+        // Deduct stock from product variants
+        $this->deductStockFromCartItems($order);
+
+        return $order;
+    }
+    /**
+     * Deduct stock from product variants associated with cart items.
+     */
+    protected function deductStockFromCartItems(Order $order)
+    {
+        foreach ($order->lines as $orderLine) {
+            $productVariant = ProductVariant::find($orderLine->purchasable_id);
+            if ($productVariant) {
+                // Deduct the stock
+                $productVariant->stock -= $orderLine->quantity;
+                $productVariant->save();
+            }
+        }
     }
 
     /**
@@ -625,7 +644,7 @@ class Cart extends BaseModel
         $this->shippingEstimateMeta = $params;
         $option = ShippingManifest::getOptions($this)
             ->filter(
-                fn ($option) => ! $option->collect
+                fn ($option) => !$option->collect
             )->sortBy('price.value')->first();
 
         if ($setOverride && $option) {

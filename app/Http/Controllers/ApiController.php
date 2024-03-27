@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Lunar\Models\Order;
+use Lunar\Models\ProductVariant;
 use Stripe\Exception\SignatureVerificationException;
 use Stripe\Webhook;
 
@@ -32,7 +34,7 @@ class ApiController extends Controller
             case 'payment_intent.succeeded':
                 $paymentIntent = $event->data->object; // contains a \Stripe\PaymentIntent
                 // Then define and call a method to handle the successful payment intent.
-                // handlePaymentIntentSucceeded($paymentIntent);
+
 
                 break;
             case 'payment_intent.processing':

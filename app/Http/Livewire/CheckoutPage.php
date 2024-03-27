@@ -311,6 +311,7 @@ class CheckoutPage extends Component
         ])->authorize();
 
         if ($payment->success) {
+
             redirect()->route('checkout-success.view');
 
             return;
