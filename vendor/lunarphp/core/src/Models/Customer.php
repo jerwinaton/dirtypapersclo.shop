@@ -18,7 +18,7 @@ use Lunar\Database\Factories\CustomerFactory;
 
 /**
  * @property int $id
- * @property ?string $title
+ * @property string $salutation
  * @property string $first_name
  * @property string $last_name
  * @property ?string $company_name

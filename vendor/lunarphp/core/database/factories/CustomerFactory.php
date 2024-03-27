@@ -13,7 +13,7 @@ class CustomerFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->title,
+            'salutation' => $this->faker->title,
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'company_name' => $this->faker->boolean ? $this->faker->company : null,

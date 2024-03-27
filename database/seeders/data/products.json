@@ -41,7 +41,7 @@
         "options": [
             {
                 "name": "Shoe Size",
-                "values": ["UK 5", "UK 6", "UK 7", "UK 8", "UK 9", "UK 10"]
+                "values": ["US 5", "US 6", "US 7", "US 8", "US 9", "US 10"]
             }
         ]
     },
@@ -58,7 +58,7 @@
         "options": [
             {
                 "name": "Shoe Size",
-                "values": ["UK 5", "UK 6", "UK 7", "UK 8", "UK 9", "UK 10"]
+                "values": ["US 5", "US 6", "US 7", "US 8", "US 9", "US 10"]
             }
         ]
     },
@@ -108,7 +108,7 @@
         "options": [
             {
                 "name": "Shoe Size",
-                "values": ["UK 5", "UK 6", "UK 7", "UK 8", "UK 9", "UK 10"]
+                "values": ["US 5", "US 6", "US 7", "US 8", "US 9", "US 10"]
             }
         ]
     },
@@ -147,7 +147,7 @@
         "options": [
             {
                 "name": "Shoe Size",
-                "values": ["UK 5", "UK 6", "UK 7", "UK 8", "UK 9", "UK 10"]
+                "values": ["US 5", "US 6", "US 7", "US 8", "US 9", "US 10"]
             }
         ]
     },
@@ -164,7 +164,7 @@
         "options": [
             {
                 "name": "Shoe Size",
-                "values": ["UK 5", "UK 6", "UK 7", "UK 8", "UK 9", "UK 10"]
+                "values": ["US 5", "US 6", "US 7", "US 8", "US 9", "US 10"]
             }
         ]
     },

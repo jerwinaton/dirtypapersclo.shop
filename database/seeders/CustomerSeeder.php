@@ -18,21 +18,19 @@ class CustomerSeeder extends AbstractSeeder
     public function run()
     {
         DB::transaction(function () {
-            $faker = Factory::create();
+            // $faker = Factory::create();
             $customers = Customer::factory(100)->create();
 
-            // B2C SETUP
+            // Business 2 Consumer SETUP
             foreach ($customers as $customer) {
-                for ($i = 0; $i < count($customers); $i++) {
-                    $user = User::factory()->create();
-                    $customer->users()->attach($user);
+                $user = User::factory()->create();
+                $customer->users()->attach($user);
 
-                    Address::factory()->create([
-                        'shipping_default' => true,
-                        'country_id' => 175, //ph
-                        'customer_id' => $customer->id,
-                    ]);
-                }
+                Address::factory()->create([
+                    'shipping_default' => true,
+                    'country_id' => 175, // Assuming country_id for B2C setup is Philippines (PH)
+                    'customer_id' => $customer->id,
+                ]);
             }
             // B2B SETUP
             // foreach ($customers as $customer) {

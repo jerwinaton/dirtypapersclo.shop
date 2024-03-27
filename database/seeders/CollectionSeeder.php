@@ -19,7 +19,7 @@ class CollectionSeeder extends AbstractSeeder
     {
         $collections = $this->getSeedData('collections');
 
-        $collectionGroup = CollectionGroup::first();
+        $collectionGroup = CollectionGroup::firstOrNew();
 
         DB::transaction(function () use ($collections, $collectionGroup) {
             foreach ($collections as $collection) {

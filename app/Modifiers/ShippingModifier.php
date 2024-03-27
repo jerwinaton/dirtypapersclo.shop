@@ -17,20 +17,29 @@ class ShippingModifier
 
         ShippingManifest::addOption(
             new ShippingOption(
-                name: 'Basic Delivery',
-                description: 'Basic Delivery',
-                identifier: 'BASDEL',
-                price: new Price(500, $cart->currency, 1),
+                name: 'Regular Delivery',
+                description: 'Regular Delivery',
+                identifier: 'REGDEL',
+                price: new Price(4900, $cart->currency, 1),
                 taxClass: $taxClass
             )
         );
 
         ShippingManifest::addOption(
             new ShippingOption(
-                name: 'Express Delivery',
-                description: 'Express Delivery',
-                identifier: 'EXPDEL',
-                price: new Price(1000, $cart->currency, 1),
+                name: 'Midsize Delivery',
+                description: 'Midsize Delivery (5-10 items)',
+                identifier: 'MIDDEL',
+                price: new Price(9900, $cart->currency, 1),
+                taxClass: $taxClass
+            )
+        );
+        ShippingManifest::addOption(
+            new ShippingOption(
+                name: 'Large Delivery',
+                description: 'Large Delivery (11 or more items)',
+                identifier: 'EXTDEL',
+                price: new Price(14900, $cart->currency, 1),
                 taxClass: $taxClass
             )
         );

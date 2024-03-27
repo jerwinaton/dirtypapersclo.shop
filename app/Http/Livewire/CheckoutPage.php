@@ -66,7 +66,7 @@ class CheckoutPage extends Component
      *
      * @var string
      */
-    public $paymentType = 'cash-in-hand';
+    public $paymentType = 'card';
 
     /**
      * {@inheritDoc}
@@ -112,6 +112,9 @@ class CheckoutPage extends Component
 
             return;
         }
+
+        $this->setShippingOptionBasedOnItemQuantity();
+
 
         // Fetch the customer from your database based on your application's logic
         //if you have a logged-in user, you can fetch the customer associated with that user
@@ -193,11 +196,12 @@ class CheckoutPage extends Component
 
             // Do we have a selected option?
             if ($this->shippingOption) {
-                $this->chosenShipping = $this->shippingOption->getIdentifier();
+                $this->setShippingOptionBasedOnItemQuantity();
                 $this->currentStep = $this->steps['shipping_option'] + 1;
             } else {
                 $this->currentStep = $this->steps['shipping_option'];
-                $this->chosenShipping = $this->shippingOptions->first()?->getIdentifier();
+
+                $this->setShippingOptionBasedOnItemQuantity();
 
                 return;
             }
@@ -216,6 +220,7 @@ class CheckoutPage extends Component
     public function refreshCart()
     {
         $this->cart = CartSession::current();
+        $this->setShippingOptionBasedOnItemQuantity();
     }
 
     /**
@@ -359,6 +364,20 @@ class CheckoutPage extends Component
             "{$type}.contact_email" => 'required|email',
             "{$type}.contact_phone" => 'nullable',
         ];
+    }
+
+    public function setShippingOptionBasedOnItemQuantity()
+    {
+        // Determine the number of items in the cart
+        $numberOfItems = $this->cart->lines()->sum('quantity');
+
+        if ($numberOfItems >= 1 && $numberOfItems <= 4) {
+            $this->chosenShipping = 'REGDEL';
+        } elseif ($numberOfItems >= 5 && $numberOfItems <= 10) {
+            $this->chosenShipping = 'MIDDEL';
+        } else {
+            $this->chosenShipping = 'EXTDEL';
+        }
     }
 
     public function render()

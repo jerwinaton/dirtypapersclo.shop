@@ -1,7 +1,7 @@
 <form wire:submit.prevent="saveShippingOption" class="bg-white border border-gray-100 rounded-xl">
     <div class="flex items-center justify-between h-16 px-6 border-b border-gray-100">
         <h3 class="font-medium">
-            Shipping Options
+            Shipping Fee
         </h3>
 
         @if ($currentStep > $step)
@@ -17,9 +17,10 @@
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             @foreach ($this->shippingOptions as $option)
             <div>
-                <input class="hidden peer" type="radio" wire:model.defer="chosenShipping" name="shippingOption" value="{{ $option->getIdentifier() }}" id="{{ $option->getIdentifier() }}" />
+                <input class="hidden peer" type="radio" wire:model.defer="chosenShipping" name="shippingOption" value="{{ $option->getIdentifier() }}" id="{{ $option->getIdentifier() }}" @if($option->getIdentifier() !== $chosenShipping) disabled @endif />
 
-                <label class="flex items-center justify-between p-4 text-sm font-medium border border-gray-100 rounded-lg shadow-sm cursor-pointer peer-checked:border-blue-500 hover:bg-gray-50 peer-checked:ring-1 peer-checked:ring-blue-500" for="{{ $option->getIdentifier() }}">
+                <label class="flex items-center justify-between p-4 text-sm font-medium border border-gray-100 rounded-lg shadow-sm cursor-pointer 
+               @if($option->getIdentifier() !== $chosenShipping) opacity-50 cursor-not-allowed @else peer-checked:border-blue-500 hover:bg-gray-50 peer-checked:ring-1 peer-checked:ring-blue-500 @endif" for="{{ $option->getIdentifier() }}">
                     <p>
                         {{ $option->getDescription() }}
                     </p>
@@ -53,7 +54,7 @@
         <div class="mt-6 text-right">
             <button class="px-5 py-3 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary/80" type="submit" wire:key="shipping_submit_btn">
                 <span wire:loading.remove.delay wire:target="saveShippingOption">
-                    Choose Shipping
+                    Continue
                 </span>
                 <span wire:loading.delay wire:target="saveShippingOption">
                     <svg class="w-5 h-5 text-white animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
