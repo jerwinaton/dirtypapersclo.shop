@@ -561,33 +561,15 @@ class Cart extends BaseModel
             )->validate();
         }
 
-        $order = app(
+        return app(
             config('lunar.cart.actions.order_create', CreateOrder::class)
         )->execute(
             $this->refresh()->calculate(),
             $allowMultipleOrders,
             $orderIdToUpdate
         )->then(fn ($order) => $order->refresh());
-
-        // Deduct stock from product variants
-        $this->deductStockFromCartItems($order);
-
-        return $order;
     }
-    /**
-     * Deduct stock from product variants associated with cart items.
-     */
-    protected function deductStockFromCartItems(Order $order)
-    {
-        foreach ($order->lines as $orderLine) {
-            $productVariant = ProductVariant::find($orderLine->purchasable_id);
-            if ($productVariant) {
-                // Deduct the stock
-                $productVariant->stock -= $orderLine->quantity;
-                $productVariant->save();
-            }
-        }
-    }
+
 
     /**
      * Returns whether a cart has enough info to create an order.

@@ -28,6 +28,12 @@ return [
     'draft_status' => 'awaiting-payment',
 
     'statuses' => [
+        'dispatched' => [
+            'color' => '#34eb77',
+            'label' => 'Dispatched',
+            'mailers' => [],
+            'notifications' => [],
+        ],
 
         'awaiting-payment' => [
             'label' => 'Awaiting Payment',
@@ -36,12 +42,12 @@ return [
             'notifications' => [],
         ],
 
-        'payment-offline' => [
-            'label' => 'Payment Offline',
-            'color' => '#0A81D7',
-            'mailers' => [],
-            'notifications' => [],
-        ],
+        // 'payment-offline' => [
+        //     'label' => 'Payment Offline',
+        //     'color' => '#0A81D7',
+        //     'mailers' => [],
+        //     'notifications' => [],
+        // ],
 
         'payment-received' => [
             'label' => 'Payment Received',
@@ -50,11 +56,7 @@ return [
             'notifications' => [],
         ],
 
-        'dispatched' => [
-            'label' => 'Dispatched',
-            'mailers' => [],
-            'notifications' => [],
-        ],
+
         'cancelled' => [
             'label' => 'Cancelled',
             'color' => '#E75F5F',

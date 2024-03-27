@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 use Livewire\Component;
 use Lunar\Hub\Http\Livewire\Traits\Notifies;
 use Lunar\Models\Order;
+use Lunar\Models\ProductVariant;
 
 class OrderStatus extends Component
 {
@@ -133,7 +134,7 @@ class OrderStatus extends Component
     {
         $mailer = $this->availableMailers[$this->previewTemplate] ?? null;
 
-        if (! $mailer) {
+        if (!$mailer) {
             return 'Unable to load preview';
         }
 
@@ -169,7 +170,7 @@ class OrderStatus extends Component
 
                 if (method_exists($mailable, 'render')) {
                 }
-                $storedPath = 'orders/activity/'.Str::random().'.html';
+                $storedPath = 'orders/activity/' . Str::random() . '.html';
 
                 $storedMailer = Storage::put(
                     $storedPath,
@@ -192,13 +193,31 @@ class OrderStatus extends Component
             'status' => $this->newStatus,
         ]);
 
+        if ($this->newStatus == "dispatched") {
+            // Deduct stock from product variants
+            $this->deductStockFromCartItems($this->order);
+        }
+
         $this->notify('Order status updated');
         $this->showStatusSelect = false;
 
         $this->emit('refreshOrder');
         $this->emit('activityUpdated');
     }
-
+    /**
+     * Deduct stock from product variants associated with cart items.
+     */
+    protected function deductStockFromCartItems(Order $order)
+    {
+        foreach ($order->lines as $orderLine) {
+            $productVariant = ProductVariant::find($orderLine->purchasable_id);
+            if ($productVariant) {
+                // Deduct the stock
+                $productVariant->stock -= $orderLine->quantity;
+                $productVariant->save();
+            }
+        }
+    }
     public function getAvailableEmailAddressesProperty()
     {
         $billing = $this->order->billingAddress;
