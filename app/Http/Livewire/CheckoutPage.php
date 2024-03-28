@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\OrderPlaced;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Livewire\ComponentConcerns\PerformsRedirects;
 use Lunar\Facades\CartSession;
@@ -147,6 +149,17 @@ class CheckoutPage extends Component
             ])->authorize();
 
             if ($payment->success) {
+
+
+                $order = $this->cart->completedOrder;
+
+                // Fetch the email of the user associated with the order
+                $email = $order->user->email;
+
+                // Send email with order details and PDF attachment
+                Mail::to($email)->send(new OrderPlaced($order));
+
+
                 redirect()->route('checkout-success.view');
 
                 return;
@@ -311,7 +324,12 @@ class CheckoutPage extends Component
         ])->authorize();
 
         if ($payment->success) {
+            $order = $this->cart->completedOrder;
+            // Fetch the email of the user associated with the order
+            $email = $order->user->email;
 
+            // Send email with order details and PDF attachment
+            Mail::to($email)->send(new OrderPlaced($order));
             redirect()->route('checkout-success.view');
 
             return;

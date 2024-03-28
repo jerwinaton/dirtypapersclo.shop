@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
 use Lunar\Base\OrderReferenceGenerator;
 
 return [
@@ -31,13 +32,13 @@ return [
         'dispatched' => [
             'color' => '#34eb77',
             'label' => 'Dispatched',
-            'mailers' => [],
+            'mailers' => [\App\Mail\OrderShipped::class],
             'notifications' => [],
         ],
         'completed' => [
             'color' => '#0EA5E9',
             'label' => 'Completed',
-            'mailers' => [],
+            'mailers' => [\App\Mail\OrderCompleted::class],
             'notifications' => [],
         ],
 
@@ -58,7 +59,7 @@ return [
         'payment-received' => [
             'label' => 'Payment Received',
             'color' => '#6a67ce',
-            'mailers' => [],
+            'mailers' => [\App\Mail\OrderPlaced::class],
             'notifications' => [],
         ],
         'cancelled' => [

@@ -2,8 +2,10 @@
 
 namespace App\Http\Livewire;
 
+use App\Mail\OrderCompleted;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use Lunar\Models\Customer;
 use Lunar\Models\Order;
@@ -100,7 +102,13 @@ class CustomerOrdersPage extends Component
             // Update the status of the order
             $order->update(['status' => 'completed', 'completed_at' => now()]);
 
-            // You can add any additional logic here, such as sending notifications, etc.
+            // sending notifications, etc.
+
+            // Fetch the email of the user associated with the order
+            $email = $order->user->email;
+
+            // Send email with order details and PDF attachment
+            Mail::to($email)->send(new OrderCompleted($order));
 
             // Emit an event to inform the frontend that the order has been received
             $this->emit('orderReceived', $orderId);
