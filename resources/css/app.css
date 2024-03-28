@@ -88,3 +88,7 @@
 [x-cloak] {
     display: none;
 }
+
+html{
+    scroll-behavior: smooth;
+}

@@ -32,13 +32,7 @@
 <div class="pb-24 mt-8 lg:gap-8 lg:flex lg:items-start">
     <div class="space-y-6 lg:flex-1">
         <div class="space-y-6">
-            @if (!$this->hasChannelAvailability)
-            <div>
-                <x-hub::alert level="danger">
-                    {{ __('adminhub::catalogue.products.show.no_channel_availability') }}
-                </x-hub::alert>
-            </div>
-            @endif
+
 
             @foreach ($this->getSlotsByPosition('top') as $slot)
             <div id="{{ $slot->handle }}">
@@ -64,12 +58,7 @@
                 ])
             </div>
 
-            <div id="availability">
-                @include('adminhub::partials.availability', [
-                'channels' => true,
-                'customerGroups' => false,
-                ])
-            </div>
+
 
             @if (!$this->variantsDisabled)
             <div id="variants">
@@ -257,6 +246,7 @@
         @endforeach
 
         @foreach ($this->sideMenu as $item)
+        @if ($item['title'] != 'Availability')
         <a href="#{{ $item['id'] }}" @class([ 'flex items-center gap-2 p-2 rounded text-gray-500' , 'hover:bg-sky-50 hover:text-sky-700'=> empty($item['has_errors']),
             'text-red-600 bg-red-50' => !empty($item['has_errors']),
             ])
@@ -274,6 +264,7 @@
                 {{ $item['title'] }}
             </span>
         </a>
+        @endif
         @endforeach
 
         @foreach ($this->getSlotsByPosition('bottom') as $slot)

@@ -11,8 +11,8 @@
             </p>
 
             <div class="flex flex-wrap justify-center gap-4 mt-8">
-                <a class="block w-full px-12 py-3 font-medium text-black bg-[#F1DA45] rounded-lg  shadow-xl border-black border-2 sm:w-auto active:primary hover:underline focus:outline-none focus:ring" href="https://lunarphp.io/" target="_blank" rel="noopener noreferrer">
-                    New Arrivals
+                <a class="block w-full px-12 py-3 font-medium text-black bg-[#F1DA45] rounded-lg  shadow-xl border-black border-2 sm:w-auto active:primary hover:underline focus:outline-none focus:ring" href="#products">
+                    Shop Now
                 </a>
             </div>
         </div>

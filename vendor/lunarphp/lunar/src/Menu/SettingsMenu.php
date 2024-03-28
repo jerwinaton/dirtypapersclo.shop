@@ -46,37 +46,37 @@ final class SettingsMenu
                 ->icon('beaker');
         });
 
-        $storeSection->addItem(function (MenuLink $item) {
-            $item->name(__('adminhub::settings.channels.index.title'))
-                ->handle('hub.channels')
-                ->route('hub.channels.index')
-                ->gate('settings:core')
-                ->icon('server');
-        });
+        // $storeSection->addItem(function (MenuLink $item) {
+        //     $item->name(__('adminhub::settings.channels.index.title'))
+        //         ->handle('hub.channels')
+        //         ->route('hub.channels.index')
+        //         ->gate('settings:core')
+        //         ->icon('server');
+        // });
 
-        $storeSection->addItem(function (MenuLink $item) {
-            $item->name(__('adminhub::settings.currencies.index.title'))
-                ->handle('hub.currencies')
-                ->route('hub.currencies.index')
-                ->gate('settings:core')
-                ->icon('currency-pound');
-        });
+        // $storeSection->addItem(function (MenuLink $item) {
+        //     $item->name(__('adminhub::settings.currencies.index.title'))
+        //         ->handle('hub.currencies')
+        //         ->route('hub.currencies.index')
+        //         ->gate('settings:core')
+        //         ->icon('currency-pound');
+        // });
 
-        $storeSection->addItem(function (MenuLink $item) {
-            $item->name(__('adminhub::settings.customer-groups.index.title'))
-                ->handle('hub.customer-groups')
-                ->route('hub.customer-groups.index')
-                ->gate('settings:manage-staff')
-                ->icon('user');
-        });
+        // $storeSection->addItem(function (MenuLink $item) {
+        //     $item->name(__('adminhub::settings.customer-groups.index.title'))
+        //         ->handle('hub.customer-groups')
+        //         ->route('hub.customer-groups.index')
+        //         ->gate('settings:manage-staff')
+        //         ->icon('user');
+        // });
 
-        $storeSection->addItem(function ($item) {
-            $item->name(__('adminhub::settings.languages.index.title'))
-                ->handle('hub.languages')
-                ->route('hub.languages.index')
-                ->gate('settings:core')
-                ->icon('translate');
-        });
+        // $storeSection->addItem(function ($item) {
+        //     $item->name(__('adminhub::settings.languages.index.title'))
+        //         ->handle('hub.languages')
+        //         ->route('hub.languages.index')
+        //         ->gate('settings:core')
+        //         ->icon('translate');
+        // });
 
         $storeSection->addItem(function (MenuLink $item) {
             $item->name(__('adminhub::settings.tags.index.title'))
@@ -126,13 +126,13 @@ final class SettingsMenu
                 ->icon('clipboard-list');
         });
 
-        $adminSection->addItem(function (MenuLink $item) {
-            $item->name(__('adminhub::settings.addons.index.title'))
-                ->handle('hub.addons')
-                ->route('hub.addons.index')
-                ->gate('settings:core')
-                ->icon('puzzle');
-        });
+        // $adminSection->addItem(function (MenuLink $item) {
+        //     $item->name(__('adminhub::settings.addons.index.title'))
+        //         ->handle('hub.addons')
+        //         ->route('hub.addons.index')
+        //         ->gate('settings:core')
+        //         ->icon('puzzle');
+        // });
 
         $adminSection->addItem(function (MenuLink $item) {
             $item->name(__('adminhub::settings.staff.index.title'))

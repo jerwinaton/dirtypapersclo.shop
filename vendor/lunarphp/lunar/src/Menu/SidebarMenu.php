@@ -108,14 +108,14 @@ final class SidebarMenu
                 ->icon('users');
         });
 
-        $salesGroup->addItem(function ($menuItem) {
-            $menuItem
-                ->name(__('adminhub::menu.sidebar.discounts'))
-                ->handle('hub.discounts')
-                ->gate('catalogue:manage-discounts')
-                ->route('hub.discounts.index')
-                ->icon('ticket');
-        });
+        // $salesGroup->addItem(function ($menuItem) {
+        //     $menuItem
+        //         ->name(__('adminhub::menu.sidebar.discounts'))
+        //         ->handle('hub.discounts')
+        //         ->gate('catalogue:manage-discounts')
+        //         ->route('hub.discounts.index')
+        //         ->icon('ticket');
+        // });
 
         return $this;
     }
