@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use Lunar\Models\Customer;
 use Lunar\Models\Order;
+use Lunar\Models\OrderAddress;
 
 class CustomerOrdersPage extends Component
 {
@@ -20,10 +21,75 @@ class CustomerOrdersPage extends Component
         'cancelled' => 'Cancelled',
 
     ];
+
+    /**
+     * The current order in view.
+     */
+    public Order $order;
+    /**
+     * The instance of the shipping address.
+     *
+     * @var \Lunar\Models\OrderAddress
+     */
+    public ?OrderAddress $shippingAddress = null;
+
+    /**
+     * The instance of the shipping address.
+     *
+     * @var \Lunar\Models\OrderAddress
+     */
+    public ?OrderAddress $billingAddress = null;
+
+    /**
+     * Whether all lines should be visible.
+     */
+    public bool $allLinesVisible = true;
+
+    /**
+     * The maximum lines to show on load.
+     */
+    public int $maxLines = 5;
+
+
+
+
+    public $showDetails = false;
+    public $selectedOrderId;
+
+
     public function setSelectedStatus($status)
     {
         $this->selectedStatus = $status;
         $this->render();
+    }
+
+    public function showOrderDetails($orderId)
+    {
+        $this->showDetails = true;
+        $this->selectedOrderId = $orderId;
+    }
+
+    public function closeOrderDetails()
+    {
+        $this->showDetails = false;
+        $this->selectedOrderId = null;
+    }
+    public function getSelectedOrderProperty()
+    {
+        if ($this->selectedOrderId) {
+            return Order::find($this->selectedOrderId);
+        }
+        return null;
+    }
+    public function getBillingShippingProperty()
+    {
+        $this->shippingAddress = $this->selectedOrder->shippingAddress ?: new OrderAddress();
+
+        $this->billingAddress = $this->selectedOrder->billingAddress ?: new OrderAddress();
+    }
+    public function getShippingLinesProperty()
+    {
+        return $this->selectedOrder->shippingLines;
     }
 
     public function render()
@@ -69,6 +135,8 @@ class CustomerOrdersPage extends Component
             $orders = $ordersQuery->paginate($this->perPage);
         }
 
-        return view('livewire.customer-orders-page')->with('orders', $orders)->layout('layouts.orders');
+        $selectedOrder = $this->selectedOrder;
+
+        return view('livewire.customer-orders-page')->with('selectedOrder', $selectedOrder)->with('orders', $orders)->layout('layouts.orders');
     }
 }

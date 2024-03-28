@@ -1,7 +1,21 @@
 <div class="p-4 border rounded-lg bg-gray-50">
+  <ul class="space-y-2 text-sm text-gray-900">
+    @foreach ($this->shippingLines as $shippingLine)
+    <li class="flex items-center justify-between">
+      <div class="flex items-center">
+        <x-hub::icon ref="truck" class="mr-2" />
 
+        {!! $shippingLine->description !!}
+      </div>
 
-  <div class="grid grid-cols-3 gap-4 pt-4 mt-4 border-t">
+      <strong>
+        {{ $shippingLine->sub_total->formatted }}
+      </strong>
+    </li>
+    @endforeach
+  </ul>
+
+  <div class="flex flex-col gap-4 pt-4 mt-4 border-t">
     <div class="col-span-2">
       <article class="space-y-2">
         @if($deliveryInstructions = $this->shippingAddress?->delivery_instructions)
@@ -11,17 +25,7 @@
           <p class="text-sm mt-1">{{ $deliveryInstructions }}</p>
         </div>
         @endif
-        <div>
-          <strong>{{ __('adminhub::global.notes') }}:</strong>
 
-          <p class="text-sm mt-1 {{ !$order->notes ? 'text-gray-500' : '' }}">
-            @if ($order->notes)
-            {{ $order->notes }}
-            @else
-            {{ __('adminhub::partials.orders.totals.notes_empty') }}
-            @endif
-          </p>
-        </div>
       </article>
     </div>
 

@@ -285,11 +285,11 @@ class OrderShow extends Component
             return $transaction->type == 'intent';
         })->count();
 
-        if (! $intents) {
+        if (!$intents) {
             return false;
         }
 
-        return ! $captures;
+        return !$captures;
     }
 
     /**
@@ -347,7 +347,7 @@ class OrderShow extends Component
     {
         $total = $this->intentTotal ?: $this->captureTotal;
 
-        if (! $total) {
+        if (!$total) {
             return 'offline';
         }
 
@@ -467,7 +467,7 @@ class OrderShow extends Component
      */
     public function getShippingEqualsBillingProperty()
     {
-        if (! $this->shippingAddress || ! $this->billingAddress) {
+        if (!$this->shippingAddress || !$this->billingAddress) {
             return false;
         }
 
@@ -495,7 +495,7 @@ class OrderShow extends Component
      */
     public function getShippingStatesProperty()
     {
-        if (! $this->shippingAddress) {
+        if (!$this->shippingAddress) {
             return collect();
         }
 
@@ -509,7 +509,7 @@ class OrderShow extends Component
      */
     public function getBillingStatesProperty()
     {
-        if (! $this->billingAddress) {
+        if (!$this->billingAddress) {
             return collect();
         }
 
