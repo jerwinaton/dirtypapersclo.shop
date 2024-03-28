@@ -34,6 +34,12 @@ return [
             'mailers' => [],
             'notifications' => [],
         ],
+        'completed' => [
+            'color' => '#0EA5E9',
+            'label' => 'Completed',
+            'mailers' => [],
+            'notifications' => [],
+        ],
 
         'awaiting-payment' => [
             'label' => 'Awaiting Payment',

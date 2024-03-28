@@ -55,6 +55,7 @@ class CustomerOrdersPage extends Component
 
     public $showDetails = false;
     public $selectedOrderId;
+    public $selectedOrderToReceiveId;
 
 
     public function setSelectedStatus($status)
@@ -91,7 +92,24 @@ class CustomerOrdersPage extends Component
     {
         return $this->selectedOrder->shippingLines;
     }
+    public function receiveOrder($orderId)
+    {
+        $order = Order::find($orderId);
+        //update status
+        if ($order) {
+            // Update the status of the order
+            $order->update(['status' => 'completed', 'completed_at' => now()]);
 
+            // You can add any additional logic here, such as sending notifications, etc.
+
+            // Emit an event to inform the frontend that the order has been received
+            $this->emit('orderReceived', $orderId);
+        }
+    }
+    public function setSelectedOrderId($orderId)
+    {
+        $this->selectedOrderId = $orderId;
+    }
     public function render()
     {
         $this->customerId = Auth::user()->id;

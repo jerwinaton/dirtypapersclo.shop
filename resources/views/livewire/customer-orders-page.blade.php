@@ -1,4 +1,4 @@
-<div class="py-12">
+<div class="py-12" x-data=" { tab: 'pending' }">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 ">
         @if ($showDetails)
         <div class="max-w-4xl mx-auto">
@@ -37,7 +37,7 @@
             </div>
         </div>
         @else
-        <div x-data=" { tab: 'pending' }" class="mx-2">
+        <div class="mx-2">
             <div>
                 <div class="">
                     <nav class="flex space-x-4" aria-label="Tabs">
@@ -90,9 +90,17 @@
                             <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
                                 <tr>
                                     <th scope="col" class="px-6 py-4">Item</th>
-                                    <th scope="col" class="px-6 py-4">Total</th>
-                                    <th scope="col" class="px-6 py-4 hidden md:table-cell">Quantity</th>
+                                    <!-- <th scope="col" class="px-6 py-4 hidden md:table-cell">Quantity</th> -->
+                                    @if ($orders && $orders->isNotEmpty())
+                                    @php
+                                    $firstOrder = $orders->first();
+                                    $statusesToShow = ['payment-received', 'completed', 'cancelled'];
+                                    @endphp
+
+                                    @if (in_array($firstOrder->status, $statusesToShow))
                                     <th scope="col" class="px-6 py-4 hidden md:table-cell">Placed at</th>
+                                    @endif
+                                    @endif
                                     @if($orders && $orders->isNotEmpty() && $orders->first()->status == "dispatched")
                                     <th scope="col" class="px-6 py-4 hidden md:table-cell">Shipped at</th>
                                     @endif
@@ -107,8 +115,8 @@
                             <tbody>
 
                                 @foreach ($orders as $index => $order )
-                                <tr wire:click="showOrderDetails({{ $order->id }})" wire:key=" {{ $order->id }}" class="{{ $index % 2 == 0 ? 'bg-white' : 'bg-sky-100/40' }} hover:bg-sky-500/20  cursor-pointer">
-                                    <td class="truncate px-6 py-4">
+                                <tr wire:key=" {{ $order->id }}" class="{{ $index % 2 == 0 ? 'bg-white' : 'bg-sky-100/40' }} ">
+                                    <td class="truncate px-6 py-4 hover:bg-sky-500/20 cursor-pointer" wire:click="showOrderDetails({{ $order->id }})">
                                         <div class="flex items-start">
                                             <div class="flex-shrink-0">
                                                 @if ($thumbnail = $order->lines->first()->purchasable?->getThumbnail())
@@ -118,7 +126,7 @@
                                                 @endif
                                             </div>
                                             <div class="ml-3">
-                                                <p class="text-sm font-bold leading-tight text-gray-800 truncate">
+                                                <p class="text-sm text-blue-500 font-bold leading-tight hover:underline truncate">
                                                     {{$order->lines->first()->description}}
                                                 </p>
                                                 @if ($order->lines->first()->purchasable?->getOptions()?->count())
@@ -140,35 +148,50 @@
         })->sum('quantity') - 1 }} more
                                                 </p>
                                                 @endif
+                                                <p class="text-primary text-xs"> {{ $order->total->formatted() }}</p>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="whitespace-nowrap px-6 py-4">
-                                        {{ $order->total->formatted() }}
-                                    </td>
-                                    <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
+
+                                    <!-- <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
                                         {{ $order->lines->filter(function($line) {
     return in_array($line->type, ['physical', 'digital']);
 })->sum('quantity') }}
-                                    </td>
+                                    </td> -->
+                                    @if ($orders && $orders->isNotEmpty())
+                                    @php
+                                    $firstOrder = $orders->first();
+                                    $statusesToShow = ['payment-received', 'completed', 'cancelled'];
+                                    @endphp
+
+                                    @if (in_array($firstOrder->status, $statusesToShow))
                                     <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
                                         {{ \Illuminate\Support\Carbon::parse($order->placed_at)->timezone('Asia/Manila')->format('M j, Y g:i A') }}
                                     </td>
-                                    @if($order->dispatched_at)
+                                    @endif
+                                    @endif
+                                    @if($order->status == "dispatched" && $order->dispatched_at)
                                     <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
                                         {{ \Illuminate\Support\Carbon::parse($order->dispatched_at)->timezone('Asia/Manila')->format('M j, Y g:i A') }}
                                     </td>
                                     @endif
-                                    @if($order->completed_at)
+                                    @if($order->status == "completed" && $order->completed_at)
                                     <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
                                         {{ \Illuminate\Support\Carbon::parse($order->completed_at)->timezone('Asia/Manila')->format('M j, Y g:i A') }}
                                     </td>
                                     @endif
-                                    @if($order && $order->cancelled_at)
+                                    @if($order->status == "cancelled" && $order && $order->cancelled_at)
                                     <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
                                         {{ \Illuminate\Support\Carbon::parse($order->cancelled_at)->timezone('Asia/Manila')->format('M j, Y g:i A') }}
                                     </td>
                                     @endif
+                                    @if($order->status == "dispatched" )
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        <x-primary-button wire:click="setSelectedOrderId({{$order->id}})" x-on:click.prevent="$dispatch('open-modal', 'confirm-order-receive')" class="bg-primary">Order Received</x-primary-button>
+                                    </td>
+
+                                    @endif
+
                                 </tr>
                                 @endforeach
 
@@ -184,5 +207,26 @@
         </div>
         {{ $orders->links() }}
         @endif
+        <x-modal name="confirm-order-receive" maxWidth="sm">
+            <div class="p-6">
+                <h2 class="text-lg font-medium text-gray-900">
+                    {{ __('Confirm order was received?') }}
+                </h2>
+
+                <p class="mt-1 text-sm text-gray-600">
+                    {{ __('Order reference: ') }} {{$selectedOrder?->reference}}
+                </p>
+                <div class="mt-6 flex justify-end">
+                    <x-secondary-button x-on:click="$dispatch('close')">
+                        {{ __('Cancel') }}
+                    </x-secondary-button>
+
+                    <x-primary-button wire:click="receiveOrder({{ $selectedOrder?->id }})" x-on:click="$dispatch('close')" class="ms-3">
+                        Confirm
+                    </x-primary-button>
+                </div>
+            </div>
+
+        </x-modal>
     </div>
 </div>
