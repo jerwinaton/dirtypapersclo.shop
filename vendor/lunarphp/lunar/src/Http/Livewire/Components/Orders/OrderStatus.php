@@ -261,7 +261,12 @@ class OrderStatus extends Component
 
         return collect($emails)->unique('address');
     }
-
+    public function getStatusProperties()
+    {
+        return collect(
+            config('lunar.orders.statuses')
+        );
+    }
     /**
      * {@inheritDoc}
      */
