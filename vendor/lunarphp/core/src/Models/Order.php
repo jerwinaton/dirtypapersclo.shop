@@ -66,6 +66,9 @@ class Order extends BaseModel
         'total' => Price::class,
         'shipping_total' => Price::class,
         'new_customer' => 'boolean',
+        'dispatched_at' => 'datetime',
+        'cancelled_at' => 'datetime',
+        'completed_at' => 'datetime',
     ];
 
     /**
@@ -234,7 +237,7 @@ class Order extends BaseModel
      */
     public function isDraft(): bool
     {
-        return ! $this->isPlaced();
+        return !$this->isPlaced();
     }
 
     /**
@@ -242,7 +245,7 @@ class Order extends BaseModel
      */
     public function isPlaced(): bool
     {
-        return ! blank($this->placed_at);
+        return !blank($this->placed_at);
     }
 
     public static function getDefaultLogExcept(): array

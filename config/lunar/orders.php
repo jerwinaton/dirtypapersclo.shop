@@ -42,12 +42,12 @@ return [
             'notifications' => [],
         ],
 
-        // 'payment-offline' => [
-        //     'label' => 'Payment Offline',
-        //     'color' => '#0A81D7',
-        //     'mailers' => [],
-        //     'notifications' => [],
-        // ],
+        'payment-offline' => [
+            'label' => 'Payment Offline',
+            'color' => '#0A81D7',
+            'mailers' => [],
+            'notifications' => [],
+        ],
 
         'payment-received' => [
             'label' => 'Payment Received',
@@ -55,14 +55,13 @@ return [
             'mailers' => [],
             'notifications' => [],
         ],
-
-
         'cancelled' => [
             'label' => 'Cancelled',
             'color' => '#E75F5F',
             'mailers' => [],
             'notifications' => [],
         ],
+
 
     ],
 

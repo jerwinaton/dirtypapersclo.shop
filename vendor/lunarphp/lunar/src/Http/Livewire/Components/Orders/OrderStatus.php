@@ -193,10 +193,21 @@ class OrderStatus extends Component
             'status' => $this->newStatus,
         ]);
 
-        if ($this->newStatus == "dispatched") {
-            // Deduct stock from product variants
-            $this->deductStockFromCartItems($this->order);
+        switch ($this->newStatus) {
+            case 'dispatched':
+                // Deduct stock from product variants
+                $this->deductStockFromCartItems($this->order);
+                $this->order->update([
+                    'dispatched_at' => now(),
+                ]);
+                break;
+            case 'cancelled':
+                $this->order->update([
+                    'cancelled_at' => now(),
+                ]);
+                break;
         }
+
 
         $this->notify('Order status updated');
         $this->showStatusSelect = false;

@@ -6,6 +6,7 @@ use App\Http\Controllers\ApiController;
 use App\Http\Livewire\CheckoutPage;
 use App\Http\Livewire\CheckoutSuccessPage;
 use App\Http\Livewire\CollectionPage;
+use App\Http\Livewire\CustomerOrdersPage;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Home;
 use App\Http\Livewire\ProductPage;
@@ -27,7 +28,7 @@ Route::get('/', Home::class)->name('home');
 
 
 Route::middleware('auth', 'verified')->group(function () {
-    Route::get('orders', [CustomerOrdersController::class, 'index'])->name('orders');
+    Route::get('orders', CustomerOrdersPage::class)->name('orders');
 });
 Route::middleware('auth', 'verified')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
