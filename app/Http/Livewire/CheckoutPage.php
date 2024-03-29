@@ -150,16 +150,6 @@ class CheckoutPage extends Component
 
             if ($payment->success) {
 
-
-                $order = $this->cart->completedOrder;
-
-                // Fetch the email of the user associated with the order
-                $email = $order->user->email;
-
-                // Send email with order details and PDF attachment
-                Mail::to($email)->send(new OrderPlaced($order));
-
-
                 redirect()->route('checkout-success.view');
 
                 return;
@@ -324,12 +314,7 @@ class CheckoutPage extends Component
         ])->authorize();
 
         if ($payment->success) {
-            $order = $this->cart->completedOrder;
-            // Fetch the email of the user associated with the order
-            $email = $order->user->email;
 
-            // Send email with order details and PDF attachment
-            Mail::to($email)->send(new OrderPlaced($order));
             redirect()->route('checkout-success.view');
 
             return;
