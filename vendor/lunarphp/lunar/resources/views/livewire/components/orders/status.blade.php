@@ -57,14 +57,7 @@
                 @endforelse
             </x-hub::input.group>
 
-            <x-hub::input.group :label="__('adminhub::components.orders.status.notifications.label')" :instructions="__('adminhub::components.orders.status.notifications.instructions')" for="additionalContent" :error="$errors->first('additionalContent')">
-                @forelse($this->availableNotifications as $notification)
-                @empty
-                <x-hub::alert level="danger">
-                    {{ __('adminhub::components.orders.status.notifications.empty') }}
-                </x-hub::alert>
-                @endforelse
-            </x-hub::input.group>
+
 
             @if(count($this->selectedMailers))
             <div class="space-y-4">
