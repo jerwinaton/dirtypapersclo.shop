@@ -1,5 +1,5 @@
 <div>
-    @if($order->status != "completed")
+    @if($order->status != "completed" && $order->status != "cancelled")
     <button class="inline-flex items-center px-4 py-2 font-bold transition border border-transparent border-gray-200 rounded hover:bg-white bg-gray-50 hover:border-gray-200" type="button" wire:click.prevent="$set('showStatusSelect', true)">
         <x-hub::icon ref="status-online" style="solid" class="w-4 mr-2" />
         {{ __('adminhub::components.orders.status.update_btn') }}
@@ -20,14 +20,24 @@
 
     <x-hub::slideover title="Update status" form="updateStatus" wire:model="showStatusSelect">
         <div class="space-y-4">
-            <x-hub::input.group :label="__('adminhub::inputs.status.label')" for="status" required :error="$errors->first('status')">
+
+            <x-hub::input.group label="New Status" for="status" required :error="$errors->first('status')">
                 <x-hub::input.select wire:model="newStatus" required>
                     <option value readonly>{{ __('adminhub::components.orders.status.select_new') }}</option>
                     @foreach($this->statuses as $handle => $status)
+                    {{-- Check if the current status matches the status that determines available options --}}
+                    @if ($order->status == 'payment-received' && in_array($handle, ['dispatched', 'cancelled']))
                     <option value="{{ $handle }}">{{ $status['label'] }}</option>
+                    @elseif ($order->status == 'awaiting-payment' && in_array($handle, ['payment-received', 'cancelled']))
+                    <option value="{{ $handle }}">{{ $status['label'] }}</option>
+                    @elseif ($order->status == 'dispatched' && in_array($handle, ['completed', 'cancelled']))
+                    <option value="{{ $handle }}">{{ $status['label'] }}</option>
+
+                    @endif
                     @endforeach
                 </x-hub::input.select>
             </x-hub::input.group>
+
             @if(!$newStatus)
             <x-hub::alert>
                 {{ __('adminhub::components.orders.status.no_status_selected_alert') }}
