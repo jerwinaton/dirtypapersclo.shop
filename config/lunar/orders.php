@@ -65,7 +65,7 @@ return [
         'cancelled' => [
             'label' => 'Cancelled',
             'color' => '#E75F5F',
-            'mailers' => [],
+            'mailers' => [\App\Mail\OrderCancelled::class],
             'notifications' => [],
         ],
 
