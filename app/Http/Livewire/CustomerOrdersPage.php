@@ -7,12 +7,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
+use Livewire\WithPagination;
 use Lunar\Models\Customer;
 use Lunar\Models\Order;
 use Lunar\Models\OrderAddress;
 
 class CustomerOrdersPage extends Component
+
 {
+    use WithPagination;
+
     public $customerId = null;
     public $perPage = 5;
     public $selectedStatus = 'pending';
@@ -162,6 +166,7 @@ class CustomerOrdersPage extends Component
         }
 
         $selectedOrder = $this->selectedOrder;
+
 
         return view('livewire.customer-orders-page')->with('selectedOrder', $selectedOrder)->with('orders', $orders)->layout('layouts.orders');
     }
