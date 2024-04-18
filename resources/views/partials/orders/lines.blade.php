@@ -39,7 +39,6 @@ return in_array($line->type, ['physical', 'digital']);
             </div>
         </button>
         <div class="ms-auto">
-
             <p class="text-sm font-medium text-gray-700">
                 {{ $line->quantity }} @ {{ $line->unit_price->formatted }}
 
@@ -48,6 +47,7 @@ return in_array($line->type, ['physical', 'digital']);
                 </span>
             </p>
         </div>
+
     </div>
     <div x-show="showDetails" class="mt-4 space-y-4">
         <article class="text-sm">
@@ -120,6 +120,9 @@ return in_array($line->type, ['physical', 'digital']);
 
                         <td class="p-2 text-gray-700 whitespace-nowrap">
                             {{ $line->total->formatted }}
+                        </td>
+                        <td>
+
                         </td>
                     </tr>
                 </tbody>

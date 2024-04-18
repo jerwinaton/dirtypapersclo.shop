@@ -120,7 +120,7 @@ class Product extends BaseModel implements SpatieHasMedia
     {
         return $this->belongsToMany(
             \Lunar\Models\Collection::class,
-            config('lunar.database.table_prefix').'collection_product'
+            config('lunar.database.table_prefix') . 'collection_product'
         )->withPivot(['position'])->withTimestamps();
     }
 

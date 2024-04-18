@@ -1,9 +1,10 @@
 <div class="py-12" x-data=" { tab: 'pending' }">
-    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8 ">
+    <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 ">
         @if ($showDetails)
-        <div class="max-w-4xl mx-auto">
+        @if(!$showReview)
+        <div class="max-w-5xl mx-auto">
             <div class="flex space-x-2 items-center mb-2">
-                <button class="text-blue-500 p-2" wire:click=" $set('showDetails', false)">Go Back</button>
+                <button class="text-blue-500 p-2" wire:click="$set('showDetails', false)">Go Back</button>
                 @if ($showDetails && $selectedOrderId && $orders->isNotEmpty() )
                 <p class="font-bold text-muted-foreground">
                     Order Reference: {{ $orders->first()->reference }}
@@ -15,8 +16,8 @@
                 @endif
             </div>
             <!-- Show detailed information -->
+            @if(!is_null( $selectedOrder))
             <div class="bg-white rounded p-4">
-                @if(!is_null( $selectedOrder))
                 @include('partials.orders.lines' ,['order'=>$selectedOrder])
                 <div class="mt-4 grid grid-cols-2 sm:grid-cols-2 gap-2">
                     <div>
@@ -33,9 +34,27 @@
                         ])
                     </section>
                 </div>
+            </div>
+            @endif
+        </div>
+        @else
+        <div class="max-w-5xl mx-auto">
+            <div class="flex space-x-2 items-center mb-2">
+                <button class="text-blue-500 p-2" wire:click=" $set('showDetails',false)">Go Back</button>
+                @if ($showDetails && $selectedOrderId && $orders->isNotEmpty() )
+                <p class="font-bold text-muted-foreground">
+                    Order Reference: {{ $orders->first()->reference }}
+                </p>
+                @endif
+            </div>
+            <!-- Show detailed information -->
+            <div class="bg-white rounded p-4">
+                @if(!is_null( $selectedOrder))
+                @include('partials.orders.lines-with-review-btn' ,['order'=>$selectedOrder, 'showReviewBtn'=>true])
                 @endif
             </div>
         </div>
+        @endif
         @else
         <div class="mx-2">
             <div>
@@ -130,7 +149,7 @@
                                                     {{$order->lines->first()->description}}
                                                 </p>
                                                 @if ($order->lines->first()->purchasable?->getOptions()?->count())
-                                                <dl class="flex before:text-gray-200 text-xs space-x-3">
+                                                <dl class="flex text-gray-800 text-xs space-x-3">
                                                     <span>Variation:</span>
                                                     @foreach ($order->lines->first()->purchasable->getOptions() as $option)
                                                     <div class="flex gap-0.5">
@@ -155,8 +174,8 @@
 
                                     <!-- <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
                                         {{ $order->lines->filter(function($line) {
-    return in_array($line->type, ['physical', 'digital']);
-})->sum('quantity') }}
+                                     return in_array($line->type, ['physical', 'digital']);
+                                        })->sum('quantity') }}
                                     </td> -->
                                     @if ($orders && $orders->isNotEmpty())
                                     @php
@@ -190,6 +209,11 @@
                                         <x-primary-button wire:click="setSelectedOrderId({{$order->id}})" x-on:click.prevent="$dispatch('open-modal', 'confirm-order-receive')" class="bg-primary">Order Received</x-primary-button>
                                     </td>
 
+                                    @endif
+                                    @if($order->status == "completed" )
+                                    <td class="whitespace-nowrap px-6 py-4">
+                                        <x-primary-button wire:click="showReviewView({{$order->id}})" class="bg-primary">Add review</x-primary-button>
+                                    </td>
                                     @endif
 
                                 </tr>
@@ -226,7 +250,62 @@
                     </x-primary-button>
                 </div>
             </div>
-
         </x-modal>
+
+        <x-modal name="review-form" maxWidth="sm">
+            @if(!is_null($selectedProductVariant?->id))
+            @php
+            $review = $selectedProductVariant->reviews()
+            ->where('product_id', $selectedProductVariant->product_id)
+            ->where('product_variant_id', $selectedProductVariant->id)
+            ->where('customer_id', auth()->id())
+            ->first();
+            @endphp
+            <div class="p-6">
+
+                <h2 class="text-lg font-medium text-gray-900">
+                    @if($review)
+                    {{ __('View Review') }}
+                    @else
+                    {{ __('Add Review') }}
+                    @endif
+                </h2>
+
+                @if ($selectedProductVariant?->getOptions()?->count())
+                <dl class="flex text-gray-800 text-xs space-x-3">
+                    <span>Variation:</span>
+                    @foreach ($selectedProductVariant->getOptions() as $option)
+                    <div class="flex gap-0.5">
+                        <dt>{{ $option }}</dt>
+                    </div>
+                    @endforeach
+                </dl>
+                @endif
+                <p class="mt-1 text-sm text-gray-600">
+                    {{ __('Product Name: ') }} {{$selectedProductVariant?->getDescription() }}
+                </p>
+
+                <div class="mt-6 flex">
+                    @if(!is_null($review))
+                    <div class="flex flex-col">
+                        <label for="review">Review:</label>
+                        <x-bladewind::rating clickable="false" :rating="$review->star_rating" color="yellow" name="starRatingView" />
+                        <p>{{$review->review}}</p>
+                    </div>
+                    @else
+                    <!-- Show add review form when no review is available -->
+                    <livewire:add-product-review wire:key="'add-product-review-' . $selectedProductVariant?->id" :productId="$selectedProductVariant?->product_id" :productVariantId="$selectedProductVariant?->id" />
+                    @endif
+                </div>
+            </div>
+            @else
+            <!-- Show loading icon while review is being fetched -->
+            <div class="flex justify-center items-center">
+                <p class="me-2">Loading</p>
+                <x-icon.loading />
+            </div>
+            @endif
+        </x-modal>
+
     </div>
 </div>

@@ -5,6 +5,7 @@ namespace Lunar\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 use Lunar\Base\BaseModel;
 use Lunar\Base\Casts\AsAttributeData;
@@ -201,5 +202,12 @@ class ProductVariant extends BaseModel implements Purchasable
         return $this->images->first(function ($media) {
             return (bool) $media->pivot?->primary;
         }) ?: $this->product->thumbnail;
+    }
+    /**
+     * Return the reviews relationship.
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
     }
 }

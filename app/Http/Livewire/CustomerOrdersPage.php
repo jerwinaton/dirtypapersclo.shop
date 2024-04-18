@@ -11,6 +11,7 @@ use Livewire\WithPagination;
 use Lunar\Models\Customer;
 use Lunar\Models\Order;
 use Lunar\Models\OrderAddress;
+use Lunar\Models\ProductVariant;
 
 class CustomerOrdersPage extends Component
 
@@ -60,7 +61,9 @@ class CustomerOrdersPage extends Component
 
 
     public $showDetails = false;
+    public $showReview = false;
     public $selectedOrderId;
+    public $selectedProductVariantToReviewId;
     public $selectedOrderToReceiveId;
 
 
@@ -70,6 +73,11 @@ class CustomerOrdersPage extends Component
         $this->render();
     }
 
+    public function showReviewView($orderId)
+    {
+        $this->showReview = true;
+        $this->showOrderDetails($orderId);
+    }
     public function showOrderDetails($orderId)
     {
         $this->showDetails = true;
@@ -85,6 +93,13 @@ class CustomerOrdersPage extends Component
     {
         if ($this->selectedOrderId) {
             return Order::find($this->selectedOrderId);
+        }
+        return null;
+    }
+    public function getSelectedProductVariantProperty()
+    {
+        if ($this->selectedProductVariantToReviewId) {
+            return ProductVariant::find($this->selectedProductVariantToReviewId);
         }
         return null;
     }
@@ -166,8 +181,9 @@ class CustomerOrdersPage extends Component
         }
 
         $selectedOrder = $this->selectedOrder;
+        $selectedProductVariant = $this->selectedProductVariant;
 
 
-        return view('livewire.customer-orders-page')->with('selectedOrder', $selectedOrder)->with('orders', $orders)->layout('layouts.orders');
+        return view('livewire.customer-orders-page')->with('selectedOrder', $selectedOrder)->with('orders', $orders)->with('selectedProductVariant', $selectedProductVariant)->layout('layouts.orders');
     }
 }
