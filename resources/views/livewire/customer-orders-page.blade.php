@@ -106,7 +106,7 @@
                         </div>
                         @else
                         <table class="rounded-xl border bg-white min-w-full text-left text-sm font-light text-surface dark:text-white ">
-                            <thead class="border-b border-neutral-200 font-medium dark:border-white/10">
+                            <thead class="border-b border-neutral-200  text-muted-foreground font-medium dark:border-white/10">
                                 <tr>
                                     <th scope="col" class="px-6 py-4">Item</th>
                                     <!-- <th scope="col" class="px-6 py-4 hidden md:table-cell">Quantity</th> -->
@@ -184,23 +184,23 @@
                                     @endphp
 
                                     @if (in_array($firstOrder->status, $statusesToShow))
-                                    <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
+                                    <td class="whitespace-nowrap px-6 py-4 text-foreground hidden md:table-cell">
                                         {{ \Illuminate\Support\Carbon::parse($order->placed_at)->timezone('Asia/Manila')->format('M j, Y g:i A') }}
                                     </td>
                                     @endif
                                     @endif
                                     @if($order->status == "dispatched" && $order->dispatched_at)
-                                    <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
+                                    <td class="whitespace-nowrap px-6 py-4 text-foreground hidden md:table-cell">
                                         {{ \Illuminate\Support\Carbon::parse($order->dispatched_at)->timezone('Asia/Manila')->format('M j, Y g:i A') }}
                                     </td>
                                     @endif
                                     @if($order->status == "completed" && $order->completed_at)
-                                    <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
+                                    <td class="whitespace-nowrap px-6 py-4 text-foreground hidden md:table-cell">
                                         {{ \Illuminate\Support\Carbon::parse($order->completed_at)->timezone('Asia/Manila')->format('M j, Y g:i A') }}
                                     </td>
                                     @endif
                                     @if($order->status == "cancelled" && $order && $order->cancelled_at)
-                                    <td class="whitespace-nowrap px-6 py-4 hidden md:table-cell">
+                                    <td class="whitespace-nowrap px-6 py-4 text-foreground hidden md:table-cell">
                                         {{ \Illuminate\Support\Carbon::parse($order->cancelled_at)->timezone('Asia/Manila')->format('M j, Y g:i A') }}
                                     </td>
                                     @endif
