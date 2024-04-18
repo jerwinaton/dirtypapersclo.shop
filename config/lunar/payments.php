@@ -2,7 +2,7 @@
 
 return [
 
-    'default' => env('PAYMENTS_TYPE', 'card'),
+    'default' => env('PAYMENTS_TYPE', 'cash-in-hand'),
 
     'types' => [
         'cash-in-hand' => [

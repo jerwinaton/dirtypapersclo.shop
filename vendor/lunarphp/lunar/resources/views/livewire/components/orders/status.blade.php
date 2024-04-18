@@ -32,6 +32,8 @@
                     <option value="{{ $handle }}">{{ $status['label'] }}</option>
                     @elseif ($order->status == 'dispatched' && in_array($handle, ['completed', 'cancelled']))
                     <option value="{{ $handle }}">{{ $status['label'] }}</option>
+                    @elseif ($order->status == 'payment-offline' && in_array($handle, ['dispatched', 'cancelled']))
+                    <option value="{{ $handle }}">{{ $status['label'] }}</option>
 
                     @endif
                     @endforeach
