@@ -308,4 +308,19 @@
         </x-modal>
 
     </div>
+    <x-bladewind::modal ok_button_action="location.reload()" cancel_button_label="" stretched_action_buttons="true" size="medium" type="success" title="Review Submitted" backdrop_can_close="false" name="review_submitted">
+        Review submitted successfully
+    </x-bladewind::modal>
 </div>
+
+
+
+<script>
+    document.addEventListener('livewire:load', function() {
+        Livewire.on('reviewSubmitted', function() {
+            // Reload the page
+            showModal('review_submitted')
+            console.log("hey")
+        });
+    });
+</script>

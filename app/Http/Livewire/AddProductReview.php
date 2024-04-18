@@ -47,6 +47,8 @@ class AddProductReview extends Component
 
         // Emit an event to close the modal after submitting the review
         $this->dispatchBrowserEvent('close');
+
+        $this->emit('reviewSubmitted');
     }
     // Method to handle rating changes
     public function setRating($newRating)
