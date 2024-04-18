@@ -1,22 +1,25 @@
 <!doctype html>
 <html>
+
 <head>
     <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Order Invoice</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <style>
         body {
-            font-size:12px;
-            font-family:'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+            font-size: 12px;
+            font-family: "DejaVu Sans", sans-serif;
         }
 
         .lines {
             margin-top: 30px;
             margin-bottom: 30px;
         }
+
         .discount-seperator {
-            color:#ccc;
+            color: #ccc;
         }
+
         .lines-heading {
             text-align: left;
             background-color: #ededed;
@@ -33,8 +36,8 @@
         }
 
         .lines-footer {
-            border-top:5px solid #f5f5f5;
-            text-align:right;
+            border-top: 5px solid #f5f5f5;
+            text-align: right;
         }
 
         .lines-footer td {
@@ -51,14 +54,12 @@
         }
 
         .info {
-            color:#0099e5;
+            color: #0099e5;
         }
 
         .summary .total td {
             border-top: 1px solid #ccc;
         }
-
-
     </style>
 </head>
 
@@ -93,21 +94,21 @@
                                     <h3>Billing</h3>
                                     {{ $order->billingAddress->fullName }}<br>
                                     @if($order->billingAddress->company_name)
-                                      {{ $order->billingAddress->company_name }}<br>
+                                    {{ $order->billingAddress->company_name }}<br>
                                     @endif
                                     {{ $order->billingAddress->line_one }}
                                     @if($order->billingAddress->line_two)
-                                      <br>{{ $order->billingAddress->line_two }}<br>
+                                    <br>{{ $order->billingAddress->line_two }}<br>
                                     @endif
                                     @if($order->billingAddress->line_three)
-                                      <br>{{ $order->billingAddress->line_three }}<br>
+                                    <br>{{ $order->billingAddress->line_three }}<br>
                                     @endif
                                     {{ $order->billingAddress->city }}<br>
                                     {{ $order->billingAddress->state }}<br>
                                     {{ $order->billingAddress->postcode }}<br>
                                     {{ $order->billingAddress->country->name }}<br>
                                     @if($order->customer?->vat_no)
-                                        <p>VAT No.: {{ $order->customer?->vat_no }}</p>
+                                    <p>VAT No.: {{ $order->customer?->vat_no }}</p>
                                     @endif
                                 </td>
 
@@ -115,14 +116,14 @@
                                     <h3>Shipping</h3>
                                     {{ $order->shippingAddress->fullName }}<br>
                                     @if($order->shippingAddress->company_name)
-                                      {{ $order->shippingAddress->company_name }}<br>
+                                    {{ $order->shippingAddress->company_name }}<br>
                                     @endif
                                     {{ $order->shippingAddress->line_one }}
                                     @if($order->shippingAddress->line_two)
-                                      <br>{{ $order->shippingAddress->line_two }}<br>
+                                    <br>{{ $order->shippingAddress->line_two }}<br>
                                     @endif
                                     @if($order->shippingAddress->line_three)
-                                      <br>{{ $order->shippingAddress->line_three }}<br>
+                                    <br>{{ $order->shippingAddress->line_three }}<br>
                                     @endif
                                     {{ $order->shippingAddress->city }}<br>
                                     {{ $order->shippingAddress->state }}<br>
@@ -168,36 +169,36 @@
                     </tr>
                 </thead>
                 <tbody class="lines-body">
-                  @foreach($order->physicalLines as $line)
+                    @foreach($order->physicalLines as $line)
                     <tr>
-                      <td>
-                        {{ $line->description }} <br>
-                        {{ $line->option }}
-                      </td>
-                      <td>
-                        {{ $line->identifier }}
-                      </td>
-                      <td>
-                        {{ $line->quantity }}
-                      </td>
-                      <td>
-                        {{ $line->unit_price->formatted }}
-                      </td>
-                      <td>
-                        {{ $line->discount_total->formatted }}
-                      </td>
-                      <td>
-                        {{ $line->tax_breakdown->amounts->sum('percentage') }}%
-                      </td>
-                      <td>
-                        {{ $line->tax_total->formatted }}
-                      </td>
+                        <td>
+                            {{ $line->description }} <br>
+                            {{ $line->option }}
+                        </td>
+                        <td>
+                            {{ $line->identifier }}
+                        </td>
+                        <td>
+                            {{ $line->quantity }}
+                        </td>
+                        <td>
+                            {{ $line->unit_price->formatted }}
+                        </td>
+                        <td>
+                            {{ $line->discount_total->formatted }}
+                        </td>
+                        <td>
+                            {{ $line->tax_breakdown->amounts->sum('percentage') }}%
+                        </td>
+                        <td>
+                            {{ $line->tax_total->formatted }}
+                        </td>
 
-                      <td>
-                        {{ $line->sub_total->formatted }}
-                      </td>
+                        <td>
+                            {{ $line->sub_total->formatted }}
+                        </td>
                     </tr>
-                  @endforeach
+                    @endforeach
                 </tbody>
                 <tfoot class="lines-footer">
                     <tr>
@@ -206,14 +207,14 @@
                         <td>{{ $order->sub_total->formatted }}</td>
                     </tr>
                     @foreach($order->shippingLines as $line)
-                      <tr>
+                    <tr>
                         <td colspan="4"></td>
                         <td colspan="3">
-                          <strong>Shipping</strong><br>
-                          <small>{{ strip_tags($line->description) }}</small>
+                            <strong>Shipping</strong><br>
+                            <small>{{ strip_tags($line->description) }}</small>
                         </td>
                         <td>{{ $line->sub_total->formatted }}</td>
-                      </tr>
+                    </tr>
                     @endforeach
                     <tr>
                         <td colspan="5"></td>
@@ -230,10 +231,12 @@
 
             @if($order->notes)
             <p><strong>Order Notes</strong><br>
-            {{ $order->notes }}</p>
+                {{ $order->notes }}
+            </p>
             <br>
             @endif
         </div>
     </div>
 </body>
+
 </html>
