@@ -41,7 +41,7 @@ class ProductPage extends Component
             return [$data['option']->id => $data['values']->first()->id];
         })->toArray();
 
-        if (! $this->variant) {
+        if (!$this->variant) {
             abort(404);
         }
     }
@@ -54,7 +54,7 @@ class ProductPage extends Component
     public function getVariantProperty()
     {
         return $this->product->variants->first(function ($variant) {
-            return ! $variant->values->pluck('id')
+            return !$variant->values->pluck('id')
                 ->diff(
                     collect($this->selectedOptionValues)->values()
                 )->count();
