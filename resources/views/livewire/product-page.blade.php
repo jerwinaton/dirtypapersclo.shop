@@ -35,6 +35,24 @@
                     {{ $this->product->translateAttribute('description') }}
                 </article>
 
+                <article class="mt-2">
+                    @php
+                    $averageRating = $this->product->reviews()->avg('star_rating');
+                    @endphp
+                    @if($averageRating)
+                    <div class="flex justify-between">
+
+                        <div class="flex space-x-2">
+                            <span>{{number_format($averageRating,1)}}</span> <x-bladewind::rating clickable="false" :rating="floor($averageRating)" color="yellow" /> <span class="text-sm text-gray-500">({{ $this->product->reviews()->count() }})</span>
+                        </div>
+                        <p class=" text-muted-foreground text-sm text-nowrap">{{ $this->product->total_units_sold }} sold</p>
+                    </div>
+                    @else
+                    <p class="text-muted-foreground text-sm">No reviews yet</p>
+                    @endif
+                </article>
+
+
                 <form class="mt-4">
                     <div class="space-y-4">
                         @foreach ($this->productOptions as $option)
@@ -74,6 +92,10 @@
                     </div>
                 </form>
             </div>
+        </div>
+        <div class="mt-10">
+            <p class="font-bold mb-5">Product Reviews</p>
+            <livewire:show-product-reviews :productId="$this->variant->product->id">
         </div>
     </div>
 </section>

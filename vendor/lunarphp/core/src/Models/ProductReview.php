@@ -7,7 +7,7 @@ use Lunar\Base\BaseModel;
 
 class ProductReview extends BaseModel
 {
-    protected $fillable = ['review', 'star_rating', 'product_id', 'product_variant_id', 'customer_id'];
+    protected $fillable = ['review', 'star_rating', 'product_id', 'product_variant_id', 'customer_id', 'order_id'];
 
     /**
      * Return the product relationship.

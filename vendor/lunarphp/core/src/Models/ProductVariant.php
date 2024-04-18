@@ -18,6 +18,7 @@ use Lunar\Base\Traits\LogsActivity;
 use Lunar\Database\Factories\ProductVariantFactory;
 use Spatie\LaravelBlink\BlinkFacade as Blink;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Termwind\Components\Hr;
 
 /**
  * @property int $id
@@ -209,5 +210,9 @@ class ProductVariant extends BaseModel implements Purchasable
     public function reviews(): HasMany
     {
         return $this->hasMany(ProductReview::class);
+    }
+    public function orderLines(): HasMany
+    {
+        return $this->hasMany(OrderLine::class, 'purchasable_id');
     }
 }

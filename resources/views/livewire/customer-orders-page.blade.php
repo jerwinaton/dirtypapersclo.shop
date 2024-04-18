@@ -259,6 +259,7 @@
             ->where('product_id', $selectedProductVariant->product_id)
             ->where('product_variant_id', $selectedProductVariant->id)
             ->where('customer_id', auth()->id())
+            ->where('order_id', $selectedOrder?->id)
             ->first();
             @endphp
             <div class="p-6">
@@ -294,7 +295,7 @@
                     </div>
                     @else
                     <!-- Show add review form when no review is available -->
-                    <livewire:add-product-review wire:key="'add-product-review-' . $selectedProductVariant?->id" :productId="$selectedProductVariant?->product_id" :productVariantId="$selectedProductVariant?->id" />
+                    <livewire:add-product-review wire:key="'add-product-review-' . $selectedProductVariant?->id" :orderId="$selectedOrder?->id" :productId="$selectedProductVariant?->product_id" :productVariantId="$selectedProductVariant?->id" />
                     @endif
                 </div>
             </div>

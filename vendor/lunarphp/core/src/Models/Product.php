@@ -203,4 +203,31 @@ class Product extends BaseModel implements SpatieHasMedia
             'priceable_id'
         )->wherePriceableType(ProductVariant::class);
     }
+    /**
+     * Return the reviews relationship.
+     */
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
+    }
+    /**
+     * Return the orders relationship through order lines.
+     */
+    /**
+     * Return the order lines relationship.
+     */
+    public function orderLines()
+    {
+        return $this->hasManyThrough(OrderLine::class, ProductVariant::class, 'product_id', 'purchasable_id');
+    }
+
+    /**
+     * Get the total number of units sold for this product from completed orders.
+     */
+    public function getTotalUnitsSoldAttribute()
+    {
+        return $this->orderLines()->whereHas('order', function ($query) {
+            $query->where('status', 'completed');
+        })->sum('quantity');
+    }
 }

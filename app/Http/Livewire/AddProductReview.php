@@ -11,14 +11,16 @@ class AddProductReview extends Component
     public $productId;
     public $review;
     public $starRating;
+    public $orderId;
 
     protected $rules = [
         'review' => 'required|min:5',
         'starRating' => 'required|numeric|min:1|max:5',
     ];
 
-    public function mount($productId, $productVariantId)
+    public function mount($productId, $productVariantId, $orderId)
     {
+        $this->orderId = $orderId;
         $this->productId = $productId;
         $this->productVariantId = $productVariantId;
         $this->starRating = 2;
@@ -39,6 +41,7 @@ class AddProductReview extends Component
             'star_rating' => $validatedData['starRating'],
             'product_id' =>  $this->productId,
             'product_variant_id' => $this->productVariantId,
+            'order_id' => $this->orderId,
             // You may need to adjust this if you have a relationship with product variants.
             'customer_id' => auth()->id(), // Assuming the current user is the customer
         ]);

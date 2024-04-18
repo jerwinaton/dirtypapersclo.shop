@@ -55,6 +55,7 @@ return in_array($line->type, ['physical', 'digital']);
             'product_id' => $line->purchasable->product_id,
             'product_variant_id' => $line->purchasable->id,
             'customer_id' => auth()->id(),
+            'order_id' => $selectedOrder->id,
             ])->exists();
             @endphp
 
